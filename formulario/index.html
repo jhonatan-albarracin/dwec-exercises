@@ -1,94 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+  - Regla del grid: .row debe tener como hijos directos solo .col-*, y la suma de columnas
+    de una fila no debe pasar de 12.
+  - Espaciado: .row lleva g-3 para separar columnas y cada campo lleva mb-3. Los col-* que
+    has puesto en labels e inputs no son la forma de dar espacio.
+  - El JS de Bootstrap (linea 7) solo hace falta para dropdowns, modales, tooltips, etc.;
+    este formulario no los usa, asi que es prescindible (no es un error).
+-->
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- REVISAR línea 6: CSS de Bootstrap por CDN, correcto. Ojo: aquí no enlazas css/styles.css (está vacío y sin usar) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> <!-- REVISAR línea 7: prescindible sin componentes JS; si lo dejas, mejor con defer o al final del body -->
     <title>Formulario</title>
 </head>
 <body>
-
-    <main>
-        <h1>Formulario</h1>
-        <form>  
-            <div class="container">  
+    <main> 
+        <form>  <!-- REVISAR línea 14: sin action ni method; vale para el ejercicio, pero para enviar de verdad haría falta action="..." method="post" -->
+            <div class="container  mb-4">
+                <h1 class="mb-4">Formulario</h1>
                 <h2>Datos personales</h2>
-                <div class="row" >
+                <div class="row g-3" >
                     <div class="col-lg-4 col-xl-2 border p-3">
-                        <label for="inputDni">DNI:</label>
-                        <input type="text" id="inputDni" name="inputDni" required>
+                        <label for="inputDni" class="col-sm-2 col-lg-2 col-xl-2">DNI:</label> <!-- REVISAR línea 19: col-xl-2 es REDUNDANTE (igual que col-lg-2). col-* en <label> no hace nada porque label es inline; usa class="form-label" -->
+                        <input type="text" id="inputDni" name="inputDni" class="col-sm-9 col-lg-8 col-xl-8" required> <!-- REVISAR línea 20: col-xl-8 redundante; label+input no suman 12 (2+9=11 en sm, 2+8=10 en lg) y los col-* añaden 15 px de padding cada uno. Mejor: class="form-control" y dar mb-3 al div padre -->
                     </div>
-                    <div class="col-lg-4 col-xl-2 border p-3">
-                        <label for="inputNombre">Nombre:</label>
-                        <input type="text" id="inputNombre" name="inputNombre" required>
+                    <div class="col-sm-12 col-lg-4 col-xl-2 border p-3"> <!-- REVISAR línea 22: mismo caso que la línea 18 (col-sm-12 redundante y cuenta de columnas) -->
+                        <label for="inputNombre" class="col-sm-2 col-lg-5 col-xl-5">Nombre:</label> <!-- REVISAR línea 23: col-xl-5 redundante (igual que col-lg-5); 2+5=7, no 12. Usa form-label -->
+                        <input type="text" id="inputNombre" name="inputNombre" class="col-sm-9 col-lg-5 col-xl-5" required> <!-- REVISAR línea 24: col-xl-5 redundante; 9+5=14 en sm y 5+5=10 en lg. Usa form-control -->
                     </div>
-                    <div class="col-lg-4 col-xl-2 border p-3">
-                        <label for="inputApellido">Apellido:</label>
-                        <input type="text" id="inputApellido" name="inputApellido" required>
+                    <div class="col-sm-12 col-lg-4 col-xl-2 border p-3"> <!-- REVISAR línea 26: mismo caso que la línea 18 -->
+                        <label for="inputApellido" class="col-sm-2 col-lg-5 col-xl-5">Apellido:</label> <!-- REVISAR línea 27: col-xl-5 redundante; usa form-label -->
+                        <input type="text" id="inputApellido" name="inputApellido" class="col-sm-9 col-lg-5 col-xl-5" required> <!-- REVISAR línea 28: col-xl-5 redundante; usa form-control -->
                     </div>
-                    <div class="col-lg-4 col-xl-2 border p-3">
-                        <label for="inputGenero">Genero</label>
-                        <select id="inputGenero" name="inputGenero">
-                            <option value="">-Seleccione una opcion-</option>
+                    <div class="col-lg-4 col-xl-2 border p-3"> <!-- REVISAR línea 30: aquí sí está bien no poner col-sm-12 (ver línea 18). Ojo con el total de 7 columnas de la fila -->
+                        <label for="inputGenero" class="col-sm-2 col-lg-5 col-xl-5">Género</label> <!-- REVISAR línea 31: "Género" lleva tilde (Género); col-xl-5 redundante; usa form-label (los demás labels sí tienen clase) -->
+                        <select id="inputGenero" name="inputGenero" class="col-sm-9 col-lg-5 col-xl-5"> <!-- REVISAR línea 32: col-xl-5 redundante; para un select usa class="form-select" -->
+                            <option value="">-Seleccione una opción-</option> <!-- REVISAR línea 33: "opción" lleva tilde (opción) -->
                             <option value="hombre">Hombre</option>
                             <option value="mujer">Mujer</option>
                             <option value="otros">Otros</option>
                         </select>
                     </div>
-                    <div class="col-lg-4 col-xl-2 border p-3">
-                        <label for="inputFechaNacimiento">Fecha de nacimiento:</label>
-                        <input type="date" id="inputFechaNacimiento" name="inputFechaNacimiento">
+                    <div class="col-lg-4 col-xl-2 border p-3"> <!-- REVISAR línea 39: mismo caso que la línea 30 -->
+                        <label for="inputFechaNacimiento" class="col-sm-2 col-lg-5 col-xl-5">Fecha de nacimiento:</label> <!-- REVISAR línea 40: col-xl-5 redundante; usa form-label -->
+                        <input type="date" id="inputFechaNacimiento" name="inputFechaNacimiento" class="col-sm-9 col-lg-5 col-xl-5"> <!-- REVISAR línea 41: col-xl-5 redundante; usa form-control -->
                     </div>
-                    <div class="col-lg-4 col-xl-2 border p-3">
-                        <label for="inputEstadoCivil">Estado civil</label>
-                        <input type="radio" id="inputEstadoCivil" name="inputEstadoCivil">
+                    <div class="col-lg-4 col-xl-2 border p-3"> <!-- REVISAR línea 43: mismo caso que la línea 30 -->
+
+                        <label for="inputEstadoCivil" class="col-sm-2 col-lg-5 col-xl-5">Estado civil</label> <!-- REVISAR línea 45: col-xl-5 redundante; usa form-label -->
+                        <div> <!-- REVISAR línea 46: este <div> y el de la línea 47 no tienen clase; para radios se usa class="form-check" en cada opción -->
+                            <div>
+                                <input type="radio" id="inputSoltero" name="inputSoltero" value="soltero"> <!-- REVISAR línea 48: IMPORTANTE: los 3 radios tienen name distinto (inputSoltero, inputCasado, inputViudo), así se pueden marcar varios. Deben compartir name="estadoCivil". Añade class="form-check-input" -->
+                                <label for ="inputSoltero" class="col-sm-2 col-lg-5 col-xl-5">Soltero/a</label> <!-- REVISAR línea 49: col-* en label no aplica; usa class="form-check-label" (también en 53 y 57) -->
+                            </div>
+                            <div>
+                                <input type="radio" id="inputCasado" name="inputCasado" value="casado"> <!-- REVISAR línea 52: mismo name que los demás; class="form-check-input" -->
+                                <label for="inputCasado" class="col-sm-2 col-lg-5 col-xl-5">Casado/a</label> <!-- REVISAR línea 53: usa form-check-label -->
+                            </div>
+                            <div>
+                                <input type="radio" id="inputViudo" name="inputViudo" value="viudo"> <!-- REVISAR línea 56: mismo name que los demás; class="form-check-input" -->
+                                <label for="inputViudo" class="col-sm-2 col-lg-5 col-xl-5">Viudo/a</label> <!-- REVISAR línea 57: usa form-check-label -->
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="col-lg-4 col-xl-2 border p-3">
-                        <label for="inputAficiones">Aficiones</label>
-                        <input type="checkbox" id="inputAficiones" name="inputAficiones">
+                    <div class="col-lg-4 col-xl-2 border p-3"> <!-- REVISAR línea 62: mismo caso que la línea 30 -->
+                        <label for="inputAficiones" class="col-sm-2 col-lg-5 col-xl-5">Aficiones</label> <!-- REVISAR línea 63: col-xl-5 redundante; usa form-label -->
+                        <div class="col-sm-12 col-lg-5 col-xl-5"> <!-- REVISAR línea 64: col-* dentro de un .col no pinta nada y col-xl-5 es redundante. Aquí solo hace falta agrupar las opciónes -->
+                            <input type="checkbox" id="inputComer" name="inputComer" value="comer"> <!-- REVISAR línea 65: añade class="form-check-input" -->
+                            <label for="inputComer">Comer</label> <!-- REVISAR línea 66: añade class="form-check-label" -->
+                            <input type="checkbox" id="inputDormir" name="inputDormir" value="Dormir"> <!-- REVISAR línea 67: form-check-input; value en mayúscula mientras "comer" va en minúscula, unifica -->
+                            <label for="inputDormir">Dormir</label> <!-- REVISAR línea 68: añade class="form-check-label" -->
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="container">
+            <div class="container  mb-4"> <!-- REVISAR línea 73: tercer .container seguido (ver línea 15). Sin mb-4 no hay espacio garantizado entre secciones -->
                 <h2>Dirección</h2>
-                <div class="row">
-                    <div class="col-lg-6 col-xl-4 border p-3">
-                        <label for="inputCodigoPostal">Codigo Postal</label>
-                        <input type="text" id="inputCodigoPostal" name="inputCodigoPostal">
+                <div class="row"> <!-- REVISAR línea 75: igual que en la línea 17, añade g-3 si quieres separación entre columnas -->
+                    <div class="col-lg-6 col-xl-4 border p-3"> <!-- REVISAR línea 76: bien (4+4+4=12 en xl, 6+6=12 en lg). No hace falta col-sm-12 (ver línea 18) -->
+                        <label for="inputCodigoPostal">Código Postal</label> <!-- REVISAR línea 77: "Código" lleva tilde (Código) y pon class="form-label" como en la primera sección -->
+                        <input type="text" id="inputCodigoPostal" name="inputCodigoPostal"> <!-- REVISAR línea 78: sin form-control, Bootstrap no le aplica su estilo -->
                     </div>
-                    <div class="col-lg-6 col-xl-4 border p-3">
-                        <label for="inputProvincia">Provincia</label>
-                        <input type="text" id="inputProvincia" name="inputProvincia">
+                    <div class="col-lg-6 col-xl-4 border p-3"> <!-- REVISAR línea 80: igual que la 76 -->
+                        <label for="inputProvincia">Provincia</label> <!-- REVISAR línea 81: añade class="form-label" -->
+                        <input type="text" id="inputProvincia" name="inputProvincia"> <!-- REVISAR línea 82: añade class="form-control" -->
                     </div>
-                    <div class="col-lg-6 col-xl-4 border p-3">
-                        <label for="inputLocalidad">Localidad</label>
-                        <input type="text" id="inputLocalidad" name="inputLocalidad">
+                    <div class="col-lg-6 col-xl-4 border p-3"> <!-- REVISAR línea 84: igual que la 76 -->
+                        <label for="inputLocalidad">Localidad</label> <!-- REVISAR línea 85: añade class="form-label" -->
+                        <input type="text" id="inputLocalidad" name="inputLocalidad"> <!-- REVISAR línea 86: añade class="form-control" -->
                     </div>
-                    <div class="col-lg-6 col-xl-4 border p-3">
-                        <label for="inputCalle">Calle</label>
-                        <input type="text" id="inputCalle" name="inputCalle">
+                    <div class="col-lg-6 col-xl-12 border p-3"> <!-- REVISAR línea 88: col-xl-12 ocupa la fila entera; correcto si quieres Calle sola -->
+                        <label for="inputCalle">Calle</label> <!-- REVISAR línea 89: añade class="form-label" -->
+                        <input type="text" id="inputCalle" name="inputCalle" class="col-xl-12"> <!-- REVISAR línea 90: class="col-xl-12" REDUNDANTE: el padre ya es col-xl-12 y form-control ya ocupa el 100 %. Pon class="form-control" -->
                     </div>
                 </div>
             </div>
-            <div class="container">
+            <div class="container  mb-4"> <!-- REVISAR línea 94: tercer .container seguido (ver línea 15) -->
                 <h2>Contacto</h2>
-                <div class="row">
-                    <div class="col-lg-6 col-xl-4 border p-3">
-                        <label for="">Email</label>
-                        <input type="email" id="inputEmail" name="inputEmail" required>
+                <div class="row"> <!-- REVISAR línea 96: igual que la línea 17, añade g-3 -->
+                    <div class="col-lg-6 col-xl-4 border p-3"> <!-- REVISAR línea 97: igual que la 76 -->
+                        <label for="">Email</label> <!-- REVISAR línea 98: for="" vacío, no asocia el label. Debe ser for="inputEmail" y añadir form-label -->
+                        <input type="email" id="inputEmail" name="inputEmail" required> <!-- REVISAR línea 99: añade class="form-control" -->
                     </div>
-                    <div class="col-lg-6 col-xl-4 border p-3">
-                        <label for="">Telefono 1</label>
-                        <input type="tel" id="inputTelefono1" name="inputTelefono1" required>
+                    <div class="col-lg-6 col-xl-4 border p-3"> <!-- REVISAR línea 101: igual que la 76 -->
+                        <label for="">Teléfono 1</label> <!-- REVISAR línea 102: "Teléfono" lleva tilde (Teléfono); for="" vacío → for="inputTeléfono1" y form-label -->
+                        <input type="tel" id="inputTelefono1" name="inputTelefono1" required> <!-- REVISAR línea 103: añade class="form-control" -->
                     </div>
-                    <div class="col-lg-6 col-xl-4 border p-3">
-                        <label for="">Telefono 2</label>
-                        <input type="tel" id="inputTelefono2" name="inputTelefono2">
+                    <div class="col-lg-6 col-xl-4 border p-3"> <!-- REVISAR línea 105: igual que la 76 -->
+                        <label for="">Teléfono 2</label> <!-- REVISAR línea 106: "Telefono" lleva tilde; for="" vacío → for="inputTelefono2" y form-label -->
+                        <input type="tel" id="inputTelefono2" name="inputTelefono2"> <!-- REVISAR línea 107: añade class="form-control" -->
                     </div>
                 </div>
             </div>
-            </div>
+            </div> <!-- REVISAR línea 111: este </div> SOBRA: no hay una apertura pendiente aquí (el <main> se cierra en la línea 113, el <form> en la 112 y los 3 containers ya están cerrados en 72, 93 y 110) -->
         </form>
     </main>
 </body>
